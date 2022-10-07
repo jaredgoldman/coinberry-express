@@ -48,8 +48,11 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/balance', async function (req, res, next) {
-  const { user } = req.body;
   try {
+    const { user } = req.body;
+    if (!database[user].balance) {
+      res.send({ data: 'user not found', success: false });
+    }
     const response = await axios.post(
       'https://ws2.trucash.com:452/cardserviceV2.asmx/Balance',
       database[user].balance,
@@ -74,6 +77,10 @@ router.post('/balance', async function (req, res, next) {
 
 router.post('/activate', (req, res, next) => {
   try {
+    const { user } = req.body;
+    if (!database[user].balance) {
+      res.send({ data: 'user not found', success: false });
+    }
     const response = await axios.post(
       'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
       database[user].activation,
@@ -98,6 +105,10 @@ router.post('/activate', (req, res, next) => {
 
 router.post('/register', (req, res, next) => {
   try {
+    const { user } = req.body;
+    if (!database[user].balance) {
+      res.send({ data: 'user not found', success: false });
+    }
     const response = await axios.post(
       'https://ws2.trucash.com:452/cardserviceV2.asmx/Register',
       database[user].register,
