@@ -67,9 +67,11 @@ router.get('/balance', async (req, res) => {
       const xml = response.data;
       const json = JSON.parse(convert.xml2json(xml, {}));
       const text = json.elements[0].elements[1].elements[0].text;
+      const balance = Number(text.split(',')[2]);
+      const points = balance * 1000;
       const data = {
-        balance: text.split(',')[2],
-        points: Number(text.split(',')[2]) * 1000,
+        balance,
+        points,
       };
       console.log('>>> data', data);
       res.send({ data: data, success: true });
