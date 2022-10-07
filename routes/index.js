@@ -43,6 +43,10 @@ const activateBody = {
   txnDesc: 'Load from Coinberry',
 };
 
+router.get('/test', (req, res) => {
+  res.send('test');
+})
+
 router.post('/balance', async function (req, res, next) {
   const { user } = req.body;
   try {
