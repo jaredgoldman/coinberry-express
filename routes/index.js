@@ -67,7 +67,7 @@ router.get('/balance', async (req, res) => {
       const xml = response.data;
       const json = JSON.parse(convert.xml2json(xml, {}));
       const text = json.elements[0].elements[1].elements[0].text;
-      const balance = Number(text.split(' ')[2]);
+      const balance = Number(text.split(',')[2]);
       if (Number.isNaN(balance)) {
         res.send({ success: false });
       }
