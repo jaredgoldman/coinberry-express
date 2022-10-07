@@ -1,8 +1,8 @@
 module.exports = {
   jared: {
     registration: {
-      corrId: 'testCorrId002',
-      userid: 'wsdemo8154',
+      corrId: 'testCorrId100',
+      userid: 'wsdemo8153',
       password: 'kExCbg8X25N9dujY',
       token: '0xfce3f92e161795bdeadc4980d2cdcd52',
       firstName: 'Jared',
@@ -23,7 +23,7 @@ module.exports = {
       address2: '',
     },
     activation: {
-      corrId: 'testCorrId002',
+      corrId: 'testCorrId200',
       userid: 'wsdemo8153',
       password: 'kExCbg8X25N9dujY',
       token: '0xf52ad35ce653d661b4d6d290feeb4009',
@@ -39,8 +39,8 @@ module.exports = {
   },
   sreyas: {
     registration: {
-      corrId: 'testCorrId003',
-      userid: 'wsdemo8154',
+      corrId: 'testCorrId300',
+      userid: 'wsdemo8153',
       password: 'kExCbg8X25N9dujY',
       token: '0x17110536903e181e7e4773eb1ed9601c',
       firstName: 'Sreyas',
@@ -77,13 +77,13 @@ module.exports = {
   },
   charles: {
     registration: {
-      corrId: 'testCorrId002',
+      corrId: 'testCorrId300',
       userid: 'wsdemo8154',
       password: 'kExCbg8X25N9dujY',
       token: '0x9812999ec31c8ff635cf02f7c839a10b',
-      firstName: 'Jared',
-      lastName: 'Goldman',
-      email: 'jared@bitbuy.ca',
+      firstName: 'Charles',
+      lastName: 'Kim',
+      email: 'charles.kim@bitbuy.ca',
       address: '100 King St',
       city: 'Toronto',
       StateProvince: 'Ontario',
@@ -99,7 +99,7 @@ module.exports = {
       address2: '',
     },
     activation: {
-      corrId: 'testCorrId002',
+      corrId: 'testCorrId301',
       userid: 'wsdemo8153',
       password: 'kExCbg8X25N9dujY',
       token: '0x9812999ec31c8ff635cf02f7c839a10b',
@@ -107,10 +107,10 @@ module.exports = {
       txnDesc: 'Load from Coinberry',
     },
     balance: {
-      corrId: 'testCorrId005',
+      corrId: 'testCorrId302',
       userId: 'wsdemo8153',
       password: 'kExCbg8X25N9dujY',
-      token: '0x9812999ec31c8ff635cf02f7c839a10b',
+      token: '0xf52ad35ce653d661b4d6d290feeb4009',
     },
   },
 
@@ -137,4 +137,4 @@ module.exports = {
   //     address2: '',
   //   },
   // },
-};
+}
