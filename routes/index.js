@@ -86,39 +86,14 @@ router.get('/balance', async (req, res) => {
   }
 });
 
-router.post('/activate', async (req, res, next) => {
-  try {
-    const { user } = req.body;
-    if (!database[user].activation) {
-      res.send({ data: 'user not found', success: false });
-    }
-    const response = await axios.post(
-      'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
-      database[user].activation,
-      {
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
-
-    if (response.status === 200) {
-      const xml = response.data;
-      const json = convert.xml2json(xml, {});
-      res.send({ data: JSON.parse(json), success: true });
-    } else {
-      res.send({ data: 'error', success: false });
-    }
-  } catch (error) {
-    console.log(error.response.data);
-  }
-});
-
 router.post('/register/activate', async (req, res) => {
   try {
     const { user } = req.query;
     if (!database[user].registration) {
-      res.send({ data: 'user registration details not found', success: false });
+      return res.send({
+        data: 'user registration details not found',
+        success: false,
+      });
     }
 
     const registerResponse = await axios.post(
@@ -133,7 +108,10 @@ router.post('/register/activate', async (req, res) => {
 
     if (registerResponse.status === 200) {
       if (!database[user].activation) {
-        res.send({ data: 'user activation details not found', success: false });
+        return res.send({
+          data: 'user activation details not found',
+          success: false,
+        });
       }
       const activationResponse = await axios.post(
         'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
@@ -149,7 +127,7 @@ router.post('/register/activate', async (req, res) => {
         const json = convert.xml2json(xml, {});
         res.send({ data: JSON.parse(json), success: true });
       } else {
-        res.send({
+        return res.send({
           data: 'activation failed, could not activate card',
           success: false,
         });
