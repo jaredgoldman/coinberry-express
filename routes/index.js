@@ -69,7 +69,7 @@ router.get('/balance', async (req, res) => {
       const text = json.elements[0].elements[1].elements[0].text;
       const balance = Number(text.split(',')[2]);
       if (Number.isNaN(balance)) {
-        res.send({ success: false });
+        return res.send({ success: false });
       }
       const points = balance * 1000;
       const data = {
