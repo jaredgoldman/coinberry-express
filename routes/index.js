@@ -153,6 +153,32 @@ router.post('/register/activate', async (req, res) => {
   }
 });
 
-router.post('/load', async (req, res) => {});
+router.post('/load', async (req, res) => {
+  try {
+    const { user } = req.query;
+    if (!database[user].load) {
+      res.send({ data: 'user not found', success: false });
+    }
+    const response = await axios.post(
+      'https://ws2.trucash.com:452/cardserviceV2.asmx/Load',
+      database[user].load,
+      {
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      const xml = response.data;
+      const json = convert.xml2json(xml, {});
+      res.send({ data: JSON.parse(json), success: true });
+    } else {
+      res.send({ data: 'error', success: false });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
