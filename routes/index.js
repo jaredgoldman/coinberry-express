@@ -137,8 +137,8 @@ router.post('/register/activate', async (req, res) => {
         });
       }
     } else {
+      console.log('>>> registration failed', registerResponse);
       res.send({
-        console.log('>>> registration failed', registerResponse);
         data: 'registration failed, could not register user',
         success: false,
       });
