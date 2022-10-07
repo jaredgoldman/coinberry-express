@@ -107,7 +107,9 @@ router.post('/register/activate', async (req, res) => {
     );
 
     if (registerResponse.status === 200) {
+      console.log('>>> register success!', registerResponse.data);
       if (!database[user].activation) {
+        console.log('>>> user activation details not found');
         return res.send({
           data: 'user activation details not found',
           success: false,
@@ -123,10 +125,12 @@ router.post('/register/activate', async (req, res) => {
         }
       );
       if (activationResponse.status === 200) {
+        console.log('>>> activation success!');
         const xml = activationResponse.data;
         const json = convert.xml2json(xml, {});
         res.send({ data: JSON.parse(json), success: true });
       } else {
+        console.log('>>> activation failed', activationResponse);
         return res.send({
           data: 'activation failed, could not activate card',
           success: false,
@@ -134,6 +138,7 @@ router.post('/register/activate', async (req, res) => {
       }
     } else {
       res.send({
+        console.log('>>> registration failed', registerResponse);
         data: 'registration failed, could not register user',
         success: false,
       });
