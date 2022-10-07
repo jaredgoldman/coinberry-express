@@ -174,7 +174,7 @@ router.post('/load', async (req, res) => {
       const json = convert.xml2json(xml, {});
       res.send({ data: JSON.parse(json), success: true });
     } else {
-      res.send({ data: 'error', success: false });
+      res.send({ data: 'error loading card', success: false });
     }
   } catch (error) {
     console.log(error);
