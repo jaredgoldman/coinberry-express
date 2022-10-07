@@ -1,3 +1,5 @@
+// this mimicks a call to a coinberry service
+
 module.exports = {
   jared: {
     registration: {
@@ -137,4 +139,4 @@ module.exports = {
   //     address2: '',
   //   },
   // },
-}
+};

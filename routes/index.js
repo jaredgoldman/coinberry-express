@@ -81,7 +81,7 @@ router.post('/balance', async (req, res, next) => {
 router.post('/activate', async (req, res, next) => {
   try {
     const { user } = req.body
-    if (!database[user].balance) {
+    if (!database[user].activation) {
       res.send({ data: 'user not found', success: false })
     }
     const response = await axios.post(
@@ -106,41 +106,44 @@ router.post('/activate', async (req, res, next) => {
   }
 })
 
-router.post('/register', async (req, res, next) => {
-  try {
-    const { user } = req.body
-    if (!database[user].balance) {
-      res.send({ data: 'user not found', success: false })
+router.post('register/activate', (req, res) => {
+  const { user } = req.body
+  if (!database[user].registration) {
+    res.send({ data: 'user registration details not found', success: false })
+  }
+  const registerResponse = await axios.post(
+    'https://ws2.trucash.com:452/cardserviceV2.asmx/Register',
+    database[user].register,
+    {
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
     }
-    const response = await axios.post(
-      'https://ws2.trucash.com:452/cardserviceV2.asmx/Register',
-      database[user].register,
+  )
+
+  if (registerResponse.status === 200) {
+    if (!database[user].activation) {
+      res.send({ data: 'user activation details not found', success: false })
+    }
+    const activationResponse = await axios.post(
+      'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
+      database[user].activation,
       {
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
         },
       }
     )
-
     if (response.status === 200) {
-      const xml = response.data
+      const xml = activationResponse.data
       const json = convert.xml2json(xml, {})
       res.send({ data: JSON.parse(json), success: true })
     } else {
       res.send({ data: 'error', success: false })
     }
-  } catch (error) {
-    console.log(error.response.data)
+  } else {
+    res.send({ data: 'registration failed, could not activate card', success: false })
   }
 })
 
 module.exports = router
-
-// balance
-// inputs: token, corrId
-
-// register
-// inputs:
-
-// activate
-// inputs:
