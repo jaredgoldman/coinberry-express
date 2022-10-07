@@ -47,7 +47,7 @@ router.get('/test', (req, res) => {
   res.send('test');
 });
 
-router.post('/balance', async (req, res, next) => {
+router.get('/balance', async (req, res) => {
   try {
     const { user } = req.query;
     if (!database[user].balance) {
@@ -118,7 +118,7 @@ router.post('/register/activate', async (req, res) => {
 
     const registerResponse = await axios.post(
       'https://ws2.trucash.com:452/cardserviceV2.asmx/Register',
-      database[user].register,
+      database[user].registration,
       {
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
