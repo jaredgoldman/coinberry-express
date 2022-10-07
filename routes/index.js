@@ -106,7 +106,7 @@ router.post('/activate', async (req, res, next) => {
   }
 });
 
-router.post('register/activate', async (req, res) => {
+router.post('/register/activate', async (req, res) => {
   const { user } = req.body;
   if (!database[user].registration) {
     res.send({ data: 'user registration details not found', success: false });
@@ -153,6 +153,6 @@ router.post('register/activate', async (req, res) => {
   }
 });
 
-// router.post('/load', async);
+router.post('/load', async (req, res) => {});
 
 module.exports = router;
