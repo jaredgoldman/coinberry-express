@@ -67,7 +67,10 @@ router.post('/balance', async (req, res, next) => {
       const xml = response.data;
       const json = JSON.parse(convert.xml2json(xml, {}));
       const text = json.elements[0].elements[1].elements[0].text;
-      const data = text.split(',')[2];
+      const data = {
+        balance: text.split(',')[2],
+        points: Number(text.split(',')[2]) * 1000,
+      };
       console.log('>>> data', data);
       res.send({ data: data, success: true });
     } else {
@@ -107,49 +110,53 @@ router.post('/activate', async (req, res, next) => {
 });
 
 router.post('/register/activate', async (req, res) => {
-  const { user } = req.body;
-  if (!database[user].registration) {
-    res.send({ data: 'user registration details not found', success: false });
-  }
-
-  const registerResponse = await axios.post(
-    'https://ws2.trucash.com:452/cardserviceV2.asmx/Register',
-    database[user].register,
-    {
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
+  try {
+    const { user } = req.query;
+    if (!database[user].registration) {
+      res.send({ data: 'user registration details not found', success: false });
     }
-  );
 
-  if (registerResponse.status === 200) {
-    if (!database[user].activation) {
-      res.send({ data: 'user activation details not found', success: false });
-    }
-    const activationResponse = await axios.post(
-      'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
-      database[user].activation,
+    const registerResponse = await axios.post(
+      'https://ws2.trucash.com:452/cardserviceV2.asmx/Register',
+      database[user].register,
       {
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
         },
       }
     );
-    if (activationResponse.status === 200) {
-      const xml = activationResponse.data;
-      const json = convert.xml2json(xml, {});
-      res.send({ data: JSON.parse(json), success: true });
+
+    if (registerResponse.status === 200) {
+      if (!database[user].activation) {
+        res.send({ data: 'user activation details not found', success: false });
+      }
+      const activationResponse = await axios.post(
+        'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
+        database[user].activation,
+        {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+      if (activationResponse.status === 200) {
+        const xml = activationResponse.data;
+        const json = convert.xml2json(xml, {});
+        res.send({ data: JSON.parse(json), success: true });
+      } else {
+        res.send({
+          data: 'activation failed, could not activate card',
+          success: false,
+        });
+      }
     } else {
       res.send({
-        data: 'activation failed, could not activate card',
+        data: 'registration failed, could not register user',
         success: false,
       });
     }
-  } else {
-    res.send({
-      data: 'registration failed, could not register user',
-      success: false,
-    });
+  } catch (error) {
+    console.log(error);
   }
 });
 
