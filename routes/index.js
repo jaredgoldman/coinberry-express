@@ -79,7 +79,7 @@ router.get('/balance', async (req, res) => {
       console.log('>>> data', data);
       res.send({ data: data, success: true });
     } else {
-      console.log('>>> response', response);
+      console.log('>>> response', response.data);
       res.send({ data: 'error', success: false });
     }
   } catch (error) {
