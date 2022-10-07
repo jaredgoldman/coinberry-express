@@ -134,15 +134,15 @@ router.post('register/activate', (req, res) => {
         },
       }
     )
-    if (response.status === 200) {
+    if (activationResponse.status === 200) {
       const xml = activationResponse.data
       const json = convert.xml2json(xml, {})
       res.send({ data: JSON.parse(json), success: true })
     } else {
-      res.send({ data: 'error', success: false })
+      res.send({ data: 'activation failed, could not activate card', success: false })
     }
   } else {
-    res.send({ data: 'registration failed, could not activate card', success: false })
+    res.send({ data: 'registration failed, could not register user', success: false })
   }
 })
 
