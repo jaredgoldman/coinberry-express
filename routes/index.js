@@ -119,7 +119,7 @@ router.post('/register/activate', async (req, res) => {
     }
 
     const registerResponse = await axios.post(
-      'https://ws2.trucash.com:452/cardserviceV2.asmx/RegisterCardHolder',
+      'https://ws2.trucash.com:452/cardserviceV2.asmx/RegisterCardholder',
       database[user].registration,
       {
         headers: {
