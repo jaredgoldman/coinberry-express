@@ -3,17 +3,17 @@ import {
   BalanceRequest,
   LoadRequest,
   RegisterRequest,
-} from './global';
+} from './global'
 
 // this mimicks a call to a coinberry service
 type UserData = {
   [key: string]: {
-    registration: RegisterRequest;
-    activation: ActivationRequest;
-    balance: BalanceRequest;
-    load: LoadRequest;
-  };
-};
+    registration: RegisterRequest
+    activation: ActivationRequest
+    balance: BalanceRequest
+    load: LoadRequest
+  }
+}
 
 export default {
   jared: {
@@ -154,4 +154,4 @@ export default {
       txnDesc: 'Load from Coinberry',
     },
   },
-} as UserData;
+} as UserData
