@@ -24,6 +24,7 @@ export const updateActivationRecord = (
     [username]: {
       ...activationRecord[username],
       active: isActivated,
+      points: 5000,
     },
   }
 
@@ -43,7 +44,7 @@ export const checkForActivation = (token: string): boolean | undefined => {
     fs.readFileSync('activationRecord.json', 'utf8')
   )
 
-  if (activationRecord[token]) return true
+  if (activationRecord[token].active) return true
 }
 
 export const queryPoints = (token: string) => {
