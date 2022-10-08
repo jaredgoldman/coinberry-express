@@ -1,50 +1,17 @@
+import {
+  ActivationRequest,
+  BalanceRequest,
+  LoadRequest,
+  RegisterRequest,
+} from './global';
+
 // this mimicks a call to a coinberry service
 type UserData = {
   [key: string]: {
-    registration: {
-      corrId: string;
-      userid: string;
-      password: string;
-      token: string;
-      firstName: string;
-      lastName: string;
-      email: string;
-      address: string;
-      city: string;
-      StateProvince: string;
-      countryIso: string;
-      phone: string;
-      securityQ: string;
-      securityA: string;
-      zipPostal: string;
-      memberId: string;
-      loyaltyPassword: string;
-      IDType: string;
-      IDNumber: string;
-      address2: string;
-    };
-    activation: {
-      corrId: string;
-      userid: string;
-      password: string;
-      token: string;
-      loadAmount: string;
-      txnDesc: string;
-    };
-    balance: {
-      corrId: string;
-      userId: string;
-      password: string;
-      token: string;
-    };
-    load: {
-      corrId: string;
-      userid: string;
-      password: string;
-      token: string;
-      loadAmount: string;
-      txnDesc: string;
-    };
+    registration: RegisterRequest;
+    activation: ActivationRequest;
+    balance: BalanceRequest;
+    load: LoadRequest;
   };
 };
 
