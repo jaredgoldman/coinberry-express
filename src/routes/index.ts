@@ -192,4 +192,23 @@ router.post(
   }
 )
 
+router.get(
+  '/status',
+  (
+    req: Request<{}, {}, {}, { user: string }>,
+    res: Response<ClientResponse>
+  ) => {
+    const { user } = req.query
+    const userIsActivated = checkForActivation(database[user].load.token)
+    if (!userIsActivated) {
+      return res.send({
+        data: 'user is not activated, please activate user first',
+        success: false,
+      })
+    } else {
+      return res.send({ data: 'user is activated', success: true })
+    }
+  }
+)
+
 module.exports = router
