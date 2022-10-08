@@ -1,6 +1,21 @@
-// this mimicks a call to a coinberry service
+import {
+  ActivationRequest,
+  BalanceRequest,
+  LoadRequest,
+  RegisterRequest,
+} from './global'
 
-module.exports = {
+// this mimicks a call to a coinberry service
+type UserData = {
+  [key: string]: {
+    registration: RegisterRequest
+    activation: ActivationRequest
+    balance: BalanceRequest
+    load: LoadRequest
+  }
+}
+
+export default {
   jared: {
     registration: {
       corrId: 'testCorrId100',
@@ -139,4 +154,4 @@ module.exports = {
       txnDesc: 'Load from Coinberry',
     },
   },
-};
+} as UserData
