@@ -1,6 +1,6 @@
 export interface ClientResponse {
   success: boolean
-  data: {}
+  data: string | { balance: number; points: number }
 }
 
 export interface BalanceRequest {

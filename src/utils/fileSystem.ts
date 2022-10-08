@@ -42,8 +42,6 @@ export const checkForActivation = (token: string): boolean | undefined => {
     fs.readFileSync('activationRecord.json', 'utf8')
   )
 
-  console.log(activationRecord)
-
   if (activationRecord[token].activated) return true
 }
 
@@ -58,4 +56,5 @@ export const queryPoints = (token: string) => {
   )
 
   if (activationRecord[token]) return activationRecord[token].points
+  else return 0
 }
