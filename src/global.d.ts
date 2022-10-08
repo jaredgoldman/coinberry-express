@@ -1,5 +1,5 @@
 export interface ClientResponse {
-  success: true
+  success: boolean
   data: {}
 }
 

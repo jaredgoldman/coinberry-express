@@ -4,6 +4,7 @@ import axios from 'axios'
 import convert from 'xml-js'
 import database from '../database'
 import { updateActivationRecord, checkForActivation } from '../utils/fileSystem'
+import { ClientResponse } from '../global'
 const router = express.Router()
 
 router.get('/test', (req: Request, res: Response) => {
@@ -16,7 +17,10 @@ router.get('/test', (req: Request, res: Response) => {
 
 router.get(
   '/balance',
-  async (req: Request<{}, {}, {}, { user: string }>, res: Response) => {
+  async (
+    req: Request<{}, {}, {}, { user: string }>,
+    res: Response<ClientResponse>
+  ) => {
     try {
       const { user } = req.query
       if (!database[user].balance) {
@@ -49,7 +53,7 @@ router.get(
         const text = json.elements[0].elements[1].elements[0].text
         const balance = Number(text.split(',')[2])
         if (Number.isNaN(balance)) {
-          return res.send({ success: false })
+          return res.send({ success: false, data: '' })
         }
         const points = balance * 1000
         const data = {
@@ -69,7 +73,10 @@ router.get(
 
 router.post(
   '/register/activate',
-  async (req: Request<{}, {}, {}, { user: string }>, res: Response) => {
+  async (
+    req: Request<{}, {}, {}, { user: string }>,
+    res: Response<ClientResponse>
+  ) => {
     try {
       const { user } = req.query
       if (!database[user].registration) {
@@ -144,7 +151,10 @@ router.post(
 
 router.post(
   '/load',
-  async (req: Request<{}, {}, {}, { user: string }>, res: Response) => {
+  async (
+    req: Request<{}, {}, {}, { user: string }>,
+    res: Response<ClientResponse>
+  ) => {
     try {
       const { user } = req.query
       if (!database[user].load) {

@@ -4,7 +4,6 @@ type ActivationRecord = {
   [key: string]: boolean
 }
 
-// update the file
 export const updateActivationRecord = (
   username: string,
   isActivated: boolean
