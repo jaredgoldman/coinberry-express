@@ -58,7 +58,7 @@ router.get(
         const balance = Number(text.split(',')[2])
         const points = queryPoints(database[user].load.token)
         if (Number.isNaN(balance)) {
-          return res.send({ success: false, data: { balance: 0, points } })
+          return res.send({ success: true, data: { balance: 0, points } })
         }
         const data = {
           balance,
