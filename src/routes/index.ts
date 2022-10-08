@@ -3,10 +3,15 @@ import express from 'express'
 import axios from 'axios'
 import convert from 'xml-js'
 import database from '../database'
+import { updateActivationRecord, checkForActivation } from '../utils/fileSystem'
 const router = express.Router()
 
 router.get('/test', (req: Request, res: Response) => {
-  res.send('server is healthy')
+  try {
+    res.send('server is healthy')
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 router.get(
@@ -17,6 +22,15 @@ router.get(
       if (!database[user].balance) {
         res.send({ data: 'user not found', success: false })
       }
+
+      const userIsActivated = checkForActivation(database[user].load.token)
+      if (!userIsActivated) {
+        return res.send({
+          data: 'user is not activated, please activate user first',
+          success: false,
+        })
+      }
+
       const response = await axios.post(
         'https://ws2.trucash.com:452/cardserviceV2.asmx/Balance',
         database[user].balance,
@@ -65,6 +79,14 @@ router.post(
         })
       }
 
+      const userIsActivated = checkForActivation(database[user].load.token)
+      if (userIsActivated) {
+        return res.send({
+          data: 'user is already activated',
+          success: false,
+        })
+      }
+
       const registerResponse = await axios.post(
         'https://ws2.trucash.com:452/cardserviceV2.asmx/RegisterCardholder',
         database[user].registration,
@@ -84,6 +106,7 @@ router.post(
             success: false,
           })
         }
+
         const activationResponse = await axios.post(
           'https://ws2.trucash.com:452/cardserviceV2.asmx/Activate',
           database[user].activation,
@@ -93,13 +116,14 @@ router.post(
             },
           }
         )
+
         if (activationResponse.status === 200) {
-          console.log('>>> activation success!')
+          const token = database[user].registration.token
+          updateActivationRecord(token, true)
           const xml = activationResponse.data
           const json = convert.xml2json(xml, {})
           res.send({ data: JSON.parse(json), success: true })
         } else {
-          console.log('>>> activation failed', activationResponse)
           return res.send({
             data: 'activation failed, could not activate card',
             success: false,
@@ -126,6 +150,15 @@ router.post(
       if (!database[user].load) {
         res.send({ data: 'user not found', success: false })
       }
+
+      const userIsActivated = checkForActivation(database[user].load.token)
+      if (!userIsActivated) {
+        return res.send({
+          data: 'user is not activated, please activate user first',
+          success: false,
+        })
+      }
+
       const response = await axios.post(
         'https://ws2.trucash.com:452/cardserviceV2.asmx/Load',
         database[user].load,
