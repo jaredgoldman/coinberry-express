@@ -1,6 +1,54 @@
 // this mimicks a call to a coinberry service
+type UserData = {
+  [key: string]: {
+    registration: {
+      corrId: string;
+      userid: string;
+      password: string;
+      token: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      address: string;
+      city: string;
+      StateProvince: string;
+      countryIso: string;
+      phone: string;
+      securityQ: string;
+      securityA: string;
+      zipPostal: string;
+      memberId: string;
+      loyaltyPassword: string;
+      IDType: string;
+      IDNumber: string;
+      address2: string;
+    };
+    activation: {
+      corrId: string;
+      userid: string;
+      password: string;
+      token: string;
+      loadAmount: string;
+      txnDesc: string;
+    };
+    balance: {
+      corrId: string;
+      userId: string;
+      password: string;
+      token: string;
+    };
+    load: {
+      corrId: string;
+      userid: string;
+      password: string;
+      token: string;
+      loadAmount: string;
+      txnDesc: string;
+    };
+  };
+};
 
-module.exports = {
+export default {
   jared: {
     registration: {
       corrId: 'testCorrId100',
@@ -139,4 +187,4 @@ module.exports = {
       txnDesc: 'Load from Coinberry',
     },
   },
-};
+} as UserData;
