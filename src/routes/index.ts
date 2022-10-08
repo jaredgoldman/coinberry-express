@@ -57,6 +57,7 @@ router.get(
         const text = json.elements[0].elements[1].elements[0].text
         const balance = Number(text.split(',')[2])
         const points = queryPoints(database[user].load.token)
+        // user has activated card but has not loaded a balance
         if (Number.isNaN(balance)) {
           return res.send({ success: true, data: { balance: 0, points } })
         }
