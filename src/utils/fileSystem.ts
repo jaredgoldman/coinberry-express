@@ -1,3 +1,5 @@
+import database from '../database'
+
 const fs = require('fs')
 
 type ActivationRecord = {
@@ -7,7 +9,7 @@ type ActivationRecord = {
   }
 }
 
-export const updateActivationRecord = (
+export const addActivationRecord = (
   username: string,
   isActivated: boolean
 ): void => {
@@ -19,10 +21,11 @@ export const updateActivationRecord = (
     fs.readFileSync('activationRecord.json', 'utf8')
   )
 
+  const userToken = database[username].registration.token
+
   const updateActivationRecord: ActivationRecord = {
     ...activationRecord,
-    [username]: {
-      ...activationRecord[username],
+    [userToken]: {
       activated: isActivated,
       points: 5000,
     },

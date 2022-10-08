@@ -4,7 +4,7 @@ import axios from 'axios'
 import convert from 'xml-js'
 import database from '../database'
 import {
-  updateActivationRecord,
+  addActivationRecord,
   checkForActivation,
   queryPoints,
 } from '../utils/fileSystem'
@@ -131,7 +131,7 @@ router.post(
 
         if (activationResponse.status === 200) {
           const token = database[user].registration.token
-          updateActivationRecord(token, true)
+          addActivationRecord(token, true)
           const xml = activationResponse.data
           const json = convert.xml2json(xml, {})
           res.send({ data: JSON.parse(json), success: true })

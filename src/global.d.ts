@@ -10,8 +10,6 @@ export interface BalanceRequest {
   token: string
 }
 
-export interface ParsedBalanceResponse {}
-
 export interface ActivationRequest {
   corrId: string
   userid: string
@@ -20,9 +18,6 @@ export interface ActivationRequest {
   loadAmount: string
   txnDesc: string
 }
-
-export interface ActivationResponse {}
-
 export interface LoadRequest {
   corrId: string
   userid: string
@@ -31,8 +26,6 @@ export interface LoadRequest {
   loadAmount: string
   txnDesc: string
 }
-
-export interface ParsedLoadResponse {}
 
 export interface RegisterRequest {
   corrId: string
@@ -56,5 +49,3 @@ export interface RegisterRequest {
   IDNumber: string
   address2: string
 }
-
-export interface ParsedRegisterResponse {}
