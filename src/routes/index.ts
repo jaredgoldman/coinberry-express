@@ -3,7 +3,11 @@ import express from 'express'
 import axios from 'axios'
 import convert from 'xml-js'
 import database from '../database'
-import { updateActivationRecord, checkForActivation } from '../utils/fileSystem'
+import {
+  updateActivationRecord,
+  checkForActivation,
+  queryPoints,
+} from '../utils/fileSystem'
 import { ClientResponse } from '../global'
 const router = express.Router()
 
@@ -55,7 +59,7 @@ router.get(
         if (Number.isNaN(balance)) {
           return res.send({ success: false, data: '' })
         }
-        const points = balance * 1000
+        const points = queryPoints(database[user].load.token)
         const data = {
           balance,
           points,

@@ -1,7 +1,10 @@
 const fs = require('fs')
 
 type ActivationRecord = {
-  [key: string]: boolean
+  [key: string]: {
+    active: boolean
+    points: number
+  }
 }
 
 export const updateActivationRecord = (
@@ -18,7 +21,10 @@ export const updateActivationRecord = (
 
   const updateActivationRecord: ActivationRecord = {
     ...activationRecord,
-    [username]: isActivated,
+    [username]: {
+      ...activationRecord[username],
+      active: isActivated,
+    },
   }
 
   fs.writeFileSync(
@@ -38,4 +44,17 @@ export const checkForActivation = (token: string): boolean | undefined => {
   )
 
   if (activationRecord[token]) return true
+}
+
+export const queryPoints = (token: string) => {
+  if (!fs.existsSync('activationRecord.json')) {
+    fs.writeFileSync('activationRecord.json', '')
+    return 0
+  }
+
+  const activationRecord: ActivationRecord = JSON.parse(
+    fs.readFileSync('activationRecord.json', 'utf8')
+  )
+
+  if (activationRecord[token]) return activationRecord[token].points
 }
