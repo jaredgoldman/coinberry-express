@@ -8,12 +8,12 @@ export const updateActivationRecord = (
   username: string,
   isActivated: boolean
 ): void => {
-  if (!fs.existsSync('dist/activationRecord.json')) {
-    fs.writeFileSync('dist/activationRecord.json', '')
+  if (!fs.existsSync('activationRecord.json')) {
+    fs.writeFileSync('activationRecord.json', '')
   }
 
   const activationRecord: ActivationRecord = JSON.parse(
-    fs.readFileSync('dist/activationRecord.json', 'utf8')
+    fs.readFileSync('activationRecord.json', 'utf8')
   )
 
   const updateActivationRecord: ActivationRecord = {
@@ -22,19 +22,19 @@ export const updateActivationRecord = (
   }
 
   fs.writeFileSync(
-    'dist/activationRecord.json',
+    'activationRecord.json',
     JSON.stringify(updateActivationRecord)
   )
 }
 
 export const checkForActivation = (token: string): boolean | undefined => {
-  if (!fs.existsSync('dist/activationRecord.json')) {
-    fs.writeFileSync('dist/activationRecord.json', '')
+  if (!fs.existsSync('activationRecord.json')) {
+    fs.writeFileSync('activationRecord.json', '')
     return false
   }
 
   const activationRecord: ActivationRecord = JSON.parse(
-    fs.readFileSync('dist/activationRecord.json', 'utf8')
+    fs.readFileSync('activationRecord.json', 'utf8')
   )
 
   if (activationRecord[token]) return true
