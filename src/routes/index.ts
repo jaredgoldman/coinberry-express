@@ -56,10 +56,10 @@ router.get(
         const json = JSON.parse(convert.xml2json(xml, {}))
         const text = json.elements[0].elements[1].elements[0].text
         const balance = Number(text.split(',')[2])
-        if (Number.isNaN(balance)) {
-          return res.send({ success: false, data: '' })
-        }
         const points = queryPoints(database[user].load.token)
+        if (Number.isNaN(balance)) {
+          return res.send({ success: false, data: { balance: 0, points } })
+        }
         const data = {
           balance,
           points,
